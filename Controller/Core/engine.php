@@ -1,6 +1,8 @@
 <?php
-
 namespace Controller\Core;
+
+use Controller\Connection\receptionist;
+
 define("STATUS_OK", 1);
 define("STATUS_EXIT", 0);
 

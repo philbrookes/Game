@@ -1,4 +1,6 @@
 <?php
+namespace Controller\Connection;
+
 use Model\Networking\socket;
 use Model\Utility\configuration;
 use Model\Utility\registry;
