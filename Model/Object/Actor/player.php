@@ -10,6 +10,10 @@ class player extends abLiving implements inLiving {
 	 */
 	private $socket;
 	
+	public function __construct(){
+	    $this->socket = new socket();
+	}
+	
         public function getData()
         {
             return $this->socket->getData();
