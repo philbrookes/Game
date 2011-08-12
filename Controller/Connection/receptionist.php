@@ -20,23 +20,30 @@ class receptionist{
     }
     
     public function checkDisconnects(){
+	$playerKicked=0;
 	foreach($this->players as $player){
 	    if(!$player->isConnected()){
+		echo "player disconnected, closing connection\n";
 		$player->closeConnection();
 		unset($player);
+		$playerKicked=1;
 	    }
 	}
-	rsort($this->players);
+	if($playerKicked) rsort($this->players);
     }
     
     public function checkNewConnections(){
 	$this->checkDisconnects();
 	$tmp = new player();
 	if($tmp->accept($this->listenSocket->getSock())){
-	    if(sizeof($players) < configuration::getSetting("max_players")){
+	    echo "Got a new connection...\n";
+	    if(sizeof($this->players) < configuration::getSetting("max_players")){
+		echo "We have space for this connection\n";
 		$this->players[] = $tmp;
+		echo "sending welcome message\n";
 		$tmp->sendData(configuration::getSetting("welcome_message"));
 	    }else{
+		echo "sending system too full message\n";
 		$this->sendSystemFullMessage($tmp);
 	    }
         }
