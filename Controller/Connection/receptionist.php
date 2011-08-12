@@ -3,48 +3,40 @@ namespace Controller\Connection;
 
 use Model\Network\socket;
 use Model\Utility\configuration;
+use Model\Utility\registry;
 use Model\Object\Actor\player;
 
 class receptionist{
     
-    private $listenSocket, $players;
+    private $listenSocket;
     
     public function __construct(){
         $this->listenSocket = new socket(configuration::getSetting("host"), configuration::getSetting("port"));
         $this->listenSocket->open();
-	echo "Kate listening on: ".configuration::getSetting("host").":".configuration::getSetting("port")."\n";
-	$this->players = array();
-    }
-    
-    public function getPlayers(){
-	return $this->players;
     }
     
     public function checkDisconnects(){
-	$playerKicked=0;
-	foreach($this->players as $player){
+	$players = registry::getObject("players");
+	foreach($players as $player){
 	    if(!$player->isConnected()){
-		echo "player disconnected, closing connection\n";
 		$player->closeConnection();
 		unset($player);
-		$playerKicked=1;
 	    }
 	}
-	if($playerKicked) rsort($this->players);
+	rsort($players);
+	registry::updateObject("players", $players);
     }
     
     public function checkNewConnections(){
 	$this->checkDisconnects();
+        $players = registry::getObject("players");
 	$tmp = new player();
 	if($tmp->accept($this->listenSocket->getSock())){
-	    echo "Got a new connection...\n";
-	    if(sizeof($this->players) < configuration::getSetting("max_players")){
-		echo "We have space for this connection\n";
-		$this->players[] = $tmp;
-		echo "sending welcome message\n";
+	    if(sizeof($players) < configuration::getSetting("max_players")){
+		$players[] = $tmp;
 		$tmp->sendData(configuration::getSetting("welcome_message"));
+		registry::updateObject("players", $players);
 	    }else{
-		echo "sending system too full message\n";
 		$this->sendSystemFullMessage($tmp);
 	    }
         }
