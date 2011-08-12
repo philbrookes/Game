@@ -1,6 +1,6 @@
 <?php
 
-//phil
+//phil was 
 
 set_time_limit (0);
 $max_clients = 10;
