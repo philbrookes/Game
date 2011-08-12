@@ -24,7 +24,7 @@ class player extends abLiving implements inLiving {
 	}
         
         public function accept($socket){
-            $this->socket->accept($socket);
+            return $this->socket->accept($socket);
         }
 	
 	public function isConnected(){
