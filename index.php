@@ -1,4 +1,7 @@
 <?php
+
+//phil
+
 set_time_limit (0);
 $max_clients = 10;
 include('socket.php');
