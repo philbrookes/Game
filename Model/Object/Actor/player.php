@@ -4,6 +4,10 @@ namespace Model\Object\Actor;
 use Model\Network\socket;
 
 class player implements inLiving {
+	/**
+	 *
+	 * @var \Model\Networking\socket 
+	 */
 	private $socket;
 	
         public function getData()
@@ -18,4 +22,11 @@ class player implements inLiving {
         public function accept($socket){
             $this->socket->accept($socket);
         }
+	
+	public function isConnected(){
+	    return $this->socket->isAlive();
+	}
+	public function closeSocket(){
+	    $this->socket->close();
+	}
 }

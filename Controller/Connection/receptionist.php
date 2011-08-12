@@ -13,14 +13,32 @@ class receptionist{
     }
     
     public function checkDisconnects(){
-        
+	$players = registry::getObject("players");
+	foreach($players as $player){
+	    if(!$player->isConnected()){
+		$player->closeConnection();
+		unset($player);
+	    }
+	}
+	rsort($players);
+	registry::updateObject("players", $players);
     }
     
     public function checkNewConnections(){
+	$this->checkDisconnects();
         $players = registry::getObject("players");
-        if(sizeof($players) < configuration::getSetting("max_players")){
-            
+	$tmp = new player();
+	if($tmp->accept($this->listenSocket->getSock())){
+	    if(sizeof($players) < configuration::getSetting("max_players")){
+		$players[] = $tmp;
+		registry::updateObject("players", $players);
+	    }else{
+		$this->sendSystemFullMessage($tmp);
+	    }
         }
     }
-    
+    public function sendSystemFullMessage(player $player){
+	$player->sendData(configuration::getSetting("system_full_message"));
+	$player->closeSocket();
+    }
 }
