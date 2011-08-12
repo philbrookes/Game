@@ -3,7 +3,7 @@ use Model\Networking\socket;
 
 set_time_limit (0);
 $max_clients = 10;
-include('socket.php');
+
 $listenSock = new socket('95.154.246.7', "10100");
 for($i=0;$i<$max_clients;$i++)$clients[$i] = false;
 $listenSock->open();

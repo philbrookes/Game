@@ -10,7 +10,6 @@ define("AUTOLOADED", 1);
  * in the background.
  */
 function autoloader($className){
-	echo "\n$className\n";
     $classFile = dirname(__FILE__)."/".str_replace("\\", "/", $className).".php";
 
     if(!file_exists($classFile)) return false;
