@@ -1,5 +1,7 @@
 <?php
 
+//phil
+
 set_time_limit (0);
 $max_clients = 10;
 include('socket.php');
@@ -16,7 +18,7 @@ while (true) {
 			echo "accepting connection to client: $i\n";
 			$clients[$i] = $tmp;
 		}
-		elseif ($i == $max_clients - 1){
+		elseif ($i == $max_clients - 1){ 
 			print ("no empty connections\n");
 		}
 	}
