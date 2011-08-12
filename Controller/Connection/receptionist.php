@@ -1,7 +1,7 @@
 <?php
 namespace Controller\Connection;
 
-use Model\Networking\socket;
+use Model\Network\socket;
 use Model\Utility\configuration;
 use Model\Utility\registry;
 

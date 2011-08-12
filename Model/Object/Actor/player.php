@@ -6,7 +6,7 @@ use Model\Network\socket;
 class player implements inLiving {
 	/**
 	 *
-	 * @var \Model\Networking\socket 
+	 * @var \Model\Network\socket 
 	 */
 	private $socket;
 	

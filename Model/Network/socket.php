@@ -1,5 +1,5 @@
 <?php
-namespace Model\Networking;
+namespace Model\Network;
 /**
 * Description of socket
 *
