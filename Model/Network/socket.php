@@ -56,14 +56,14 @@ class socket {
 		return $data;
 	}
 	
-	public function isDead(){
-		if(@socket_read === false){
-		    return true;
-		}else{
-		    return false;
-		}
+	public function isAlive(){
+	    if(@socket_read($this->sockHandle, 0) === false){
+		return false;
+	    }else{
+		return true;
+	    }
 	}
-	
+
 	public function write($data){
 		socket_write($this->sockHandle, $data);
 	}
