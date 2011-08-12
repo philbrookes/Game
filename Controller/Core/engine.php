@@ -15,7 +15,7 @@ class engine {
 	private $Kate;
 	
 	public function __construct() {
-	    $this->Kate = new \receptionist();
+	    $this->Kate = new receptionist();
 	}
 	
 	public function getStatus(){
