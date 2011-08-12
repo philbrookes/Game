@@ -8,7 +8,7 @@ use Model\Object\Actor\player;
 
 class receptionist{
     
-    private $listenSocket;
+    private $listenSocket, $players;
     
     public function __construct(){
         $this->listenSocket = new socket(configuration::getSetting("host"), configuration::getSetting("port"));
@@ -16,26 +16,26 @@ class receptionist{
     }
     
     public function checkDisconnects(){
-	$players = registry::getObject("players");
-	foreach($players as $player){
+	$this->players = registry::getObject("players");
+	foreach($this->players as $player){
 	    if(!$player->isConnected()){
 		$player->closeConnection();
 		unset($player);
 	    }
 	}
-	rsort($players);
-	registry::updateObject("players", $players);
+	rsort($this->players);
+	registry::updateObject("players", $this->players);
     }
     
     public function checkNewConnections(){
 	$this->checkDisconnects();
-        $players = registry::getObject("players");
+        $this->players = registry::getObject("players");
 	$tmp = new player();
 	if($tmp->accept($this->listenSocket->getSock())){
 	    if(sizeof($players) < configuration::getSetting("max_players")){
-		$players[] = $tmp;
+		$this->players[] = $tmp;
 		$tmp->sendData(configuration::getSetting("welcome_message"));
-		registry::updateObject("players", $players);
+		registry::updateObject("players", $this->players);
 	    }else{
 		$this->sendSystemFullMessage($tmp);
 	    }
