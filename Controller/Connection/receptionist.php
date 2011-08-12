@@ -21,7 +21,6 @@ class receptionist{
     }
     
     public function checkDisconnects(){
-	echo "checking for disconnects\n";
 	$playerKicked=0;
 	foreach($this->players as $player){
 	    if(!$player->isConnected()){
@@ -35,7 +34,6 @@ class receptionist{
     }
     
     public function checkNewConnections(){
-	echo "checking for new connections\n";
 	$this->checkDisconnects();
 	$tmp = new player();
 	if($tmp->accept($this->listenSocket->getSock())){
