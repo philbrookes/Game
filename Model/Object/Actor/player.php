@@ -1,6 +1,6 @@
 <?php
-
 namespace Model\Object\Actor;
+
 use Model\Network\socket;
 
 class player implements inLiving {

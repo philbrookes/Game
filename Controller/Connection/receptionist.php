@@ -4,6 +4,7 @@ namespace Controller\Connection;
 use Model\Network\socket;
 use Model\Utility\configuration;
 use Model\Utility\registry;
+use Model\Object\Actor\player;
 
 class receptionist{
     
