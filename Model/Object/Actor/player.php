@@ -3,7 +3,7 @@ namespace Model\Object\Actor;
 
 use Model\Network\socket;
 
-class player implements inLiving {
+class player extends abLiving implements inLiving {
 	/**
 	 *
 	 * @var \Model\Network\socket 
