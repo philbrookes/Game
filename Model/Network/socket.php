@@ -57,11 +57,7 @@ class socket {
 	}
 	
 	public function isAlive(){
-	    if(@socket_read($this->sockHandle, 0) === false){
-		return false;
-	    }else{
-		return true;
-	    }
+	    return true;
 	}
 
 	public function write($data){
