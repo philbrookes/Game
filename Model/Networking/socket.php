@@ -55,7 +55,15 @@ class socket {
 		$data = @socket_read($this->sockHandle, 1024);
 		return $data;
 	}
-
+	
+	public function isDead(){
+		if(@socket_read === false){
+		    return true;
+		}else{
+		    return false;
+		}
+	}
+	
 	public function write($data){
 		socket_write($this->sockHandle, $data);
 	}
