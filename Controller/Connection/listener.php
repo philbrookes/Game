@@ -7,7 +7,7 @@ include('socket.php');
 $listenSock = new socket('95.154.246.7', "10100");
 for($i=0;$i<$max_clients;$i++)$clients[$i] = false;
 $listenSock->open();
-while (true) {
+while (true) {  
 	for ($i = 0; $i < $max_clients; $i++){
 		if ($clients[$i] == false) {
 			$tmp = new socket();
