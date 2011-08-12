@@ -6,6 +6,15 @@ define("STATUS_EXIT", 0);
 
 class engine {
 	private $status;
+	/**
+	 *
+	 * @var \receptionist 
+	 */
+	private $Kate;
+	
+	public function __construct() {
+	    $this->Kate = new \receptionist();
+	}
 	
 	public function getStatus(){
 		return $this->status;
@@ -17,7 +26,7 @@ class engine {
 	
 	public function loop(){
 		while($this->status != STATUS_EXIT){
-			
+		    $this->Kate->checkNewConnections();			    
 		}
 	}
 }
