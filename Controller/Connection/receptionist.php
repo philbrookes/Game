@@ -12,6 +12,7 @@ class receptionist{
     public function __construct(){
         $this->listenSocket = new socket(configuration::getSetting("host"), configuration::getSetting("port"));
         $this->listenSocket->open();
+	$this->players = array();
     }
     
     public function getPlayers(){
