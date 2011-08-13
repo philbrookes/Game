@@ -17,7 +17,6 @@ class receptionist{
     
     public function checkDisconnects(){
 	$players = registry::getObject("players");
-	echo "checking ".sizeof($players)." players for disconnects\n";
 	foreach($players as $player){
 	    if(!$player->isConnected()){
 		echo "disconnected player found...\n";
