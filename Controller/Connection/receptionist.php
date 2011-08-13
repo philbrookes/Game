@@ -5,6 +5,7 @@ use Model\Network\socket;
 use Model\Utility\configuration;
 use Model\Utility\registry;
 use Model\Object\Actor\player;
+use Model\Instruction\instruction;
 
 class receptionist{
     
@@ -45,5 +46,25 @@ class receptionist{
     public function sendSystemFullMessage(player $player){
 	$player->sendData(configuration::getSetting("system_full_message"));
 	$player->closeSocket();
+    }
+    
+    public function mapCommands(){
+	$players = registry::getObject("players");
+	foreach($players as $player){
+	    $player = new Player();
+	    $res = $player->getData();
+	    if($res != ""){
+		$instruction = new instruction($res);
+		switch(strtolower($instruction->getCommand())){
+		    case "blurt":
+			$comm = new \Controller\Command\sendToAll();
+			$comm->processCommand($instruction);
+			break;
+		    default :
+			$comm = new \Controller\Command\what();
+			$comm->processCommand($instruction);
+		}
+	    }
+	}
     }
 }

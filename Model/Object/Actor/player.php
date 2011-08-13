@@ -9,11 +9,18 @@ class player extends abLiving implements inLiving {
 	 * @var \Model\Network\socket 
 	 */
 	private $socket;
+	private $id;
+	
+	private static $staticId;
 	
 	public function __construct(){
+	    $this->id = ++self::$staticId;
 	    $this->socket = new socket();
 	}
 	
+	public function getId(){
+	    return $this->id;
+	}
         public function getData()
         {
             return $this->socket->getData();
