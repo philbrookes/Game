@@ -35,6 +35,7 @@ class receptionist{
 	$tmp = new player();
 	if($tmp->accept($this->listenSocket->getSock())){
 	    if(sizeof($players) < configuration::getSetting("max_players")){
+		$tmp->assignId();
 		$players[] = $tmp;
 		$tmp->sendData(configuration::getSetting("welcome_message"));
 		registry::updateObject("players", $players);

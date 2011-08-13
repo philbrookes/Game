@@ -14,10 +14,11 @@ class player extends abLiving implements inLiving {
 	private static $staticId;
 	
 	public function __construct(){
-	    $this->id = ++self::$staticId;
 	    $this->socket = new socket();
 	}
-	
+	public function assignId(){
+	    $this->id = ++self::$staticId;
+	}
 	public function getId(){
 	    return $this->id;
 	}
