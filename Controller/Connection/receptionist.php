@@ -61,10 +61,16 @@ class receptionist{
 	    $res = $player->getData();
 	    if($res != ""){
 		$instruction = new instruction($res, $player);
+                echo "received command: ".$instruction->getCommand()."\n";
                 $file = configuration::getSetting("scripts_dir").$instruction->getCommand().configuration::getSetting("scripts_ext");
+                echo "file needed to satisfy command: ".$file;
 		if(file_exists($file)){
                     $script = new Script($file);
+                    echo "created script\n";
                     Parser::execute($script, $player);
+                    echo "executed script\n";
+                }else{
+                    $player->write("what?");
                 }
 	    }
 	}
