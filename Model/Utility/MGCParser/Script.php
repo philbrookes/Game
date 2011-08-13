@@ -42,6 +42,7 @@ class Script {
     
     private function tidy(){
         //read file into array
+        echo "reading script from: ".$this->file."\n";
         $this->lines =  file($this->file);
         foreach($this->lines as $line){
             //remove all comments
