@@ -57,7 +57,7 @@ class socket {
 	}
 	
 	public function isAlive(){
-	    if(@socket_read($this->sockHandle, 0) === false){
+	    if(@socket_rcv($this->sockHandle, $res, 1024, MSG_PEEK) === false){
 		return false;
 	    }else{
 		return true;
