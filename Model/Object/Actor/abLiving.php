@@ -10,7 +10,6 @@ abstract class abLiving {
 		    $intelligence,
 		    $wisdom,
 		    $constitution;
-        protected $name;
         
         public function __construct(){
             $this->name = "UNNAMED";
