@@ -28,7 +28,8 @@ class engine {
 	
 	public function loop(){
 		while($this->status != STATUS_EXIT){
-		    $this->Kate->checkNewConnections();			    
+		    $this->Kate->checkNewConnections();		
+		    $this->Kate->mapCommands();
 		}
 	}
 }
