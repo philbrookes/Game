@@ -17,11 +17,11 @@ class receptionist{
     
     public function checkDisconnects(){
 	$players = registry::getObject("players");
-	foreach($players as $player){
+	foreach($players as $index => $player){
 	    if(!$player->isConnected()){
 		echo "disconnected player found...\n";
 		$player->closeSocket();
-		unset($player);
+		unset($players[$index]);
 	    }
 	}
 	rsort($players);
