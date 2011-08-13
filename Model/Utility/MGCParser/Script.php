@@ -44,7 +44,6 @@ class Script {
         //read file into array
         echo "reading script from: ".$this->file."\n";
         $this->lines =  file($this->file);
-        print_r($this->lines);
         foreach($this->lines as $line){
             //remove all comments
             $pos = strpos($line, "//");
@@ -53,8 +52,10 @@ class Script {
             }
         }
         $this->contents = implode(" ", $this->lines);
+        echo "contents: ".$this->contents."\n";
         //concatenate file and split on line-ends: ;
         $this->lines = explode(";", $this->content);
+        
     }
 }
 
