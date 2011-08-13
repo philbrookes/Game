@@ -36,7 +36,7 @@ class receptionist{
 	if($tmp->accept($this->listenSocket->getSock())){
 	    if(sizeof($players) < configuration::getSetting("max_players")){
 		$tmp->assignId();
-                
+                echo "New Player connected\n";
                 $instruction = new instruction("blank command", $tmp);
                 $comm = new \Controller\Command\welcome();
                 $comm->processCommand($instruction);
