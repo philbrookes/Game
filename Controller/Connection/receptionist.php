@@ -53,7 +53,7 @@ class receptionist{
 	foreach($players as $player){
 	    $res = $player->getData();
 	    if($res != ""){
-		$instruction = new instruction($res);
+		$instruction = new instruction($res, $player);
 		switch(strtolower($instruction->getCommand())){
 		    case "blurt":
 			$comm = new \Controller\Command\sendToAll();
