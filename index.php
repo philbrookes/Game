@@ -7,6 +7,8 @@ use Model\Utility\registry;
 
 configuration::loadFromIni(dirname(__FILE__)."/Config/config.ini");
 
+ini_set("default_socket_timeout", configuration::getSetting("socket_timeout"));
+
 $players = array();
 registry::addObject("players", $players);
 

@@ -60,11 +60,11 @@ class socket {
 	    $this->write(" ");
 	    $result = socket_last_error($this->sockHandle);
 	    echo "got $result...\n";
-	    if($result !== false){
-		echo "client is alive\n";
-		return true;
-	    }else{
+	    if($result == 32){
 		echo "client is not alive\n";
+		return false;
+	    }else{
+		echo "client is alive\n";
 		return true;
 	    }
 	}
