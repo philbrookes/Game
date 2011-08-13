@@ -1,7 +1,7 @@
 <?php
 namespace Controller\Command;
-use Model\Command\abCommand as comm;
+use Model\Instruction\instruction;
 
 abstract class abCommand{
-    abstract public function processCommand(comm $command);
+    abstract public function processCommand(instruction $instruction);
 }
