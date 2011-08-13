@@ -51,7 +51,6 @@ class receptionist{
     public function mapCommands(){
 	$players = registry::getObject("players");
 	foreach($players as $player){
-	    $player = new Player();
 	    $res = $player->getData();
 	    if($res != ""){
 		$instruction = new instruction($res);
