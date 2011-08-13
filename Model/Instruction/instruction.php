@@ -13,6 +13,7 @@ class instruction{
     protected $player;
     
     public function __construct($string, player $player){
+        $string = trim($string);
 	$this->player = $player;
 	$this->string = $string;
 	$bits = explode(" ", $string);
@@ -30,7 +31,6 @@ class instruction{
         }else{
             return $this->arguments[$index];
         }        
-        
     }
     
     public function getPlayer(){
