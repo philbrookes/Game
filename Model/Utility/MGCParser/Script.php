@@ -44,6 +44,7 @@ class Script {
         //read file into array
         echo "reading script from: ".$this->file."\n";
         $this->lines =  file($this->file);
+        print_r($this->lines);
         foreach($this->lines as $line){
             //remove all comments
             $pos = strpos($line, "//");
