@@ -20,7 +20,7 @@ class receptionist{
 	foreach($players as $player){
 	    if(!$player->isConnected()){
 		echo "disconnected player found...\n";
-		$player->closeConnection();
+		$player->closeSocket();
 		unset($player);
 	    }
 	}
