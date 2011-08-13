@@ -10,7 +10,6 @@ class Script {
         if(file_exists($file) && is_readable($file)){
             $this->file = $file;
             $this->tidy();
-            $this->read();
             $this->status=1;
         }else{
             $this->status=0;
