@@ -57,7 +57,7 @@ class socket {
 	}
 	
 	public function isAlive(){
-	    $this->write(chr(8));
+	    $this->write(chr(0));
 	    $result = socket_last_error($this->sockHandle);
 	    echo "got $result...\n";
 	    if($result == 32 || $result == 104){
