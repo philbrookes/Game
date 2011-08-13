@@ -57,9 +57,9 @@ class socket {
 	}
 	
 	public function isAlive(){
-	    $this->write(chr(1));
+	    $this->write("\0");
 	    $result = socket_last_error($this->sockHandle);
-	    echo "sent ".chr(1)." got $result...\n";
+	    echo "got $result...\n";
 	    if($result == 32 || $result == 104){
 		echo "client is not alive\n";
 		return false;
