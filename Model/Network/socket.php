@@ -57,15 +57,14 @@ class socket {
 	}
 	
 	public function isAlive(){
-	    echo "getting result from socket_rcv\n";
-	    $result = socket_recv($this->sockHandle, $res, 1024, MSG_PEEK);
-	    echo "received $result from probling socket\n";
+	    $result = socket_last_error($this->sockHandle);
+	    echo "got $result...\n";
 	    if($result !== false){
 		echo "client is alive\n";
 		return true;
 	    }else{
 		echo "client is not alive\n";
-		return false;
+		return true;
 	    }
 	}
 
