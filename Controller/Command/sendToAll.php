@@ -9,7 +9,7 @@ class sendToAll extends abCommand{
 	$players = registry::getObject("players");
 	foreach($players as $player){
 	    if($player->getId() != $instruction->getPlayer()->getId()){
-		$player->sendData($instruction->getPlayer()->getId()." said: ".$msg);
+		$player->sendData($instruction->getPlayer()->getName()." said: ".$msg);
 	    }else{
 		$player->sendData("You said: ".$msg);
 	    }

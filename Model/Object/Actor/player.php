@@ -16,12 +16,15 @@ class player extends abLiving implements inLiving {
 	public function __construct(){
 	    $this->socket = new socket();
 	}
+        
 	public function assignId(){
 	    $this->id = ++self::$staticId;
 	}
+        
 	public function getId(){
 	    return $this->id;
 	}
+        
         public function getData()
         {
             return $this->socket->getData();
@@ -38,6 +41,7 @@ class player extends abLiving implements inLiving {
 	public function isConnected(){
 	    return $this->socket->isAlive();
 	}
+       
 	public function closeSocket(){
 	    $this->socket->close();
 	}

@@ -8,4 +8,3 @@ class what extends abCommand{
 	$instruction->getPlayer()->sendData("What?");
     }
 }
-?>

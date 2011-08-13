@@ -24,8 +24,13 @@ class instruction{
 	return $this->command;
     }
     
-    public function getArguments(){
-	return $this->arguments;
+    public function getArguments($index = -1){
+	if($index == -1){
+         return $this->arguments;   
+        }else{
+            return $this->arguments[$index];
+        }        
+        
     }
     
     public function getPlayer(){

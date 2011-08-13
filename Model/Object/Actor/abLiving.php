@@ -1,6 +1,6 @@
 <?php
 namespace Model\Object\Actor;
-class abLiving {
+abstract class abLiving {
 	protected   $health,
 		    $name,
 		    $sex,
@@ -10,4 +10,17 @@ class abLiving {
 		    $intelligence,
 		    $wisdom,
 		    $constitution;
+        protected $name;
+        
+        public function __construct(){
+            $this->name = "UNNAMED";
+        }
+        
+        public function getName() {
+            return $this->name;
+        }
+
+        public function setName($name) {
+            $this->name = $name;
+        }
 }
