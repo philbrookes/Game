@@ -60,7 +60,7 @@ class socket {
 	    $res = @socket_recv($this->sockHandle, $ress, 1024, MSG_PEEK);
 	    $result = socket_last_error($this->sockHandle);
 	    echo "got $result($res)...\n";
-	    if($result == 32 || $result == 104){
+	    if($result == 32 || $result == 104 || $res === 0){
 		echo "client is not alive\n";
 		return false;
 	    }else{
