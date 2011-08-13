@@ -59,13 +59,11 @@ class socket {
 	public function isAlive(){
 	    $res = @socket_recv($this->sockHandle, $ress, 1024, MSG_PEEK);
 	    $result = socket_last_error($this->sockHandle);
-	    echo "got $result($res)...\n";
 	    //if bytes received is zero rather than blank, client has hung up
 	    if($result == 32 || $result == 104 || $res === 0){
 		echo "client is not alive\n";
 		return false;
 	    }else{
-		echo "client is alive\n";
 		return true;
 	    }
 	}
