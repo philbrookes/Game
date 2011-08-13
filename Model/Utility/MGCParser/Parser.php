@@ -140,6 +140,7 @@ class Parser{
         if($script->syntaxOK()){
             $lineon = 0;
             $lines = $script->getLines();
+            print_r($lines);
             while($lineon <= sizeof($script->getLines())-1){
                 $line = $lines[$lineon];
                 //assigning a variable
