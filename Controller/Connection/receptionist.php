@@ -60,6 +60,10 @@ class receptionist{
 			$comm = new \Controller\Command\sendToAll();
 			$comm->processCommand($instruction);
 			break;
+                    case "name":
+                        $comm = new \Controller\Command\setName();
+                        $comm->processCommand($instruction);
+                        break;
 		    default :
 			$comm = new \Controller\Command\what();
 			$comm->processCommand($instruction);
