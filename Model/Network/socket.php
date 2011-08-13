@@ -75,5 +75,4 @@ class socket {
 	public function close(){
 		socket_close($this->sockHandle);
 	}
-
 }

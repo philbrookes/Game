@@ -6,6 +6,8 @@ use Model\Utility\configuration;
 use Model\Utility\registry;
 use Model\Object\Actor\player;
 use Model\Instruction\instruction;
+use Model\Utility\MGCParser\Script;
+use Model\Utility\MGCParser\Parser;
 
 class receptionist{
     
@@ -59,19 +61,11 @@ class receptionist{
 	    $res = $player->getData();
 	    if($res != ""){
 		$instruction = new instruction($res, $player);
-		switch(strtolower($instruction->getCommand())){
-		    case "blurt":
-			$comm = new \Controller\Command\sendToAll();
-			$comm->processCommand($instruction);
-			break;
-                    case "name":
-                        $comm = new \Controller\Command\setName();
-                        $comm->processCommand($instruction);
-                        break;
-		    default :
-			$comm = new \Controller\Command\what();
-			$comm->processCommand($instruction);
-		}
+                $file = configuration::getSetting("scripts_dir").$instruction->getCommand().configuration::getSetting("scripts_ext");
+		if(file_exists($file)){
+                    $script = new Script($file);
+                    Parser::execute($script, $player);
+                }
 	    }
 	}
     }
