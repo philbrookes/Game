@@ -58,6 +58,7 @@ class Parser{
         preg_match("|\((.*)\)|", $line, $matches);
         $equation = $matches[1];
         //get varnames used
+        print_r($operations);
         list($var1, $var2) = explode("|", str_replace($operations, "|", $equation));
         $var1 = self::getVarValue($var1, $script);
         $var2 = self::getVarValue($var2, $script);
