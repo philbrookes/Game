@@ -1,2 +1,5 @@
+tellPlayer($player_id, 'You said...');
 tellPlayer($player_id, $argument);
+tellAllOtherPlayers($player_id, $player_name);
+tellAllOtherPlayers($player_id, ' said...');
 tellAllOtherPlayers($player_id, $argument);
