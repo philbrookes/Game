@@ -20,6 +20,7 @@ class Parser{
     } 
     
     private static function handleVariables($line){
+        $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
         ereg('|\$([a-zA-Z0-9])|', $line, $matches);
         $varname = $matches[0];
         //check for protected variable names
@@ -52,6 +53,7 @@ class Parser{
     }
     
     private static function handleIfStatement(script $script, $line, $lineon){
+        $operations = explode(",", configuration::getSetting("operations"));
         //get equation from if statement
         ereg("|\((.*)\)|", $line, $matches);
         $equation = $matches[0];
@@ -133,8 +135,6 @@ class Parser{
     }
     
     public static function execute(Script $script, player $player){
-        $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
-        $operations = explode(",", configuration::getSetting("operations"));
         self::populateSpecialVars($script, $player);
         
         if($script->syntaxOK()){
