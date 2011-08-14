@@ -138,6 +138,8 @@ class Parser{
             $arg = self::getVarValue($arg, $script);
         }
         
+        print_r($args);
+        
         if(!class_exists($wholeclass)){
             return $classname;
         }
