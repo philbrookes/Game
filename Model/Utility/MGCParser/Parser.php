@@ -29,12 +29,40 @@ class Parser{
         }
     } 
     
-    private static function handleVariables($line, script $script){
-        $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
+    private static function handleConcatenation($equation, script $script){
         $inspeechmarks=false;
-        $invarname=false;
         $bits = array();
         $biton=0;
+        
+        for($i=0;$i<strlen($equation);$i++){
+            $char = substr($equation, $i, 1);
+            if($char == "'"){
+                if($inspeechmarks == true){
+                    $inspeechmarks = false;
+                }
+                else $inspeechmarks = true;
+            }elseif(!ctype_alnum($char) && ! $inspeechmarks){
+                if($char == "&"){
+                    $biton++;
+                }elseif( strlen( trim($char) ) ){ //not a whitespace char
+                    echo "Syntax error in $equation\n";
+                }
+            }
+            $bits[$biton] .= $char;
+        }
+        echo "$equation resulted in: \n";
+        print_r($bits);
+        foreach($bits as $bit){
+            $bit = trim($bit);
+            $value .= self::getVarValue($bit, $script);
+        }
+    
+        return $value;
+    }
+    
+    private static function handleVariables($line, script $script){
+        $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
+
         preg_match('|\$([a-zA-Z0-9]*)|', $line, $matches);
         $varname = $matches[1];
         //check for protected variable names
@@ -43,28 +71,8 @@ class Parser{
             $value = trim(substr($line, strpos($line, "=")+1));
             //delete ;
             $value = substr($value,0,strlen($value)-1);
-            for($i=0;$i<strlen($value);$i++){
-                $char = substr($value, $i, 1);
-                if($char == "'"){
-                    if($inspeechmarks == true){
-                        $inspeechmarks = false;
-                    }
-                    else $inspeechmarks = true;
-                }elseif(!ctype_alnum($char) && ! $inspeechmarks){
-                    if($char == "&"){
-                        $biton++;
-                    }elseif( strlen( trim($char) ) ){ //not a whitespace char
-                        echo "Syntax error in $line in {$script->getFile()}\n";
-                    }
-                }
-                $bits[$biton] .= $char;
-            }
-            echo "$line resulted in: \n";
-            print_r($bits);
-            foreach($bits as $bit){
-                $bit = trim($bit);
-                $value .= self::getVarValue($bit, $script);
-            }
+            
+            $value = self::handleConcatenation($value, $script);
             
             //new value
             $script->setVarValue($varname, $value);
@@ -94,8 +102,8 @@ class Parser{
         $equation = $matches[1];
         //get varnames used
         list($var1, $var2) = explode("|", str_replace($operations, "|", $equation));
-        $var1 = self::getVarValue($var1, $script);
-        $var2 = self::getVarValue($var2, $script);
+        $var1 = self::handleConcatenation($var1, $script);
+        $var2 = self::handleConcatenation($var2, $script);
         foreach($operations as $operation){
             if(strpos($equation, $operation)){
                 switch($operation){
@@ -161,7 +169,7 @@ class Parser{
         $args = explode(",", $args);
         
         foreach($args as $index => $arg){
-            $args[$index] = self::getVarValue($arg, $script);
+            $args[$index] = self::handleConcatenation($arg, $script);
         }
         
         print_r($args);
