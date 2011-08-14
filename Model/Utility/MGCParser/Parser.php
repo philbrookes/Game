@@ -19,7 +19,7 @@ class Parser{
         }
     } 
     
-    private static function handleVariables($line, $script){
+    private static function handleVariables($line, script $script){
         $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
         preg_match('|\$([a-zA-Z0-9])|', $line, $matches);
         $varname = $matches[1];
@@ -35,6 +35,7 @@ class Parser{
             //new value
             $script->setVarValue($varname, $value);
             
+            echo "set variable $varname = ".$script->getVarValue($varname)."\n";
             
             if(strpos($value, "$") !== false){
             //evaluation of other variables
