@@ -8,7 +8,7 @@ class Parser{
     
     private static function findEndIf(script $script, $linenum){
         $counter = 0;
-        for($i = $linenum+1; $i<=sizeof($script->getLines())-1; $i++){
+        for($i = $linenum+1; $i<sizeof($script->getLines())-1; $i++){
             if(substr($line, 0, 2) == "if") $counter++;
             if(substr($line, 0, 6) == "endif"){
                 $counter--;
@@ -61,7 +61,7 @@ class Parser{
         list($var1, $var2) = explode("|", str_replace($operations, "|", $equation));
         $var1 = self::getVarValue($var1, $script);
         $var2 = self::getVarValue($var2, $script);
-        
+        echo "var1: $var1, var2: $var2\n";
         foreach($operations as $operation){
             if(strpos($equation, $operation)){
                 switch($operation){
@@ -141,7 +141,7 @@ class Parser{
         if($script->syntaxOK()){
             $lineon = 0;
             $lines = $script->getLines();
-            while($lineon <= sizeof($lines)-1){
+            while($lineon < sizeof($lines)-1){
                 $line = $lines[$lineon];
                 echo "processing line $lineon of ".(sizeof($lines)-1)."... $line \n";
                 //assigning a variable
