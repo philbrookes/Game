@@ -1,0 +1,2 @@
+tellPlayer($player_id, $argument);
+tellAllOtherPlayers($player_id, $argument);
