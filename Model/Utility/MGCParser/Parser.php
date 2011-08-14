@@ -142,8 +142,8 @@ class Parser{
             $lineon = 0;
             $lines = $script->getLines();
             while($lineon <= sizeof($lines)-1){
-                echo "processing line $lineon of ".(sizeof($lines)-1)."\n";
                 $line = $lines[$lineon];
+                echo "processing line $lineon of ".(sizeof($lines)-1)."... $line \n";
                 //assigning a variable
                 if(strpos(trim($line), '$') === 0){
                     echo "found a variable\n$line\n";
