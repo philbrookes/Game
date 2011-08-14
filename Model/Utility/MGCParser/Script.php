@@ -48,7 +48,7 @@ class Script {
             //remove all comments
             $pos = strpos($line, "//");
             if($pos !== false){
-                $$this->lines[$linenum] = substr($line, 0, $pos);
+                $this->lines[$linenum] = substr($line, 0, $pos);
             }
         }
         $this->contents = str_replace(array("\r\n", "\r", "\n"), "", implode(" ", $this->lines));
