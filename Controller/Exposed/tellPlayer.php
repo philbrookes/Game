@@ -13,6 +13,7 @@ class tellPlayer {
         $playerId = $arg[0];
         $msg = $arg[1];
         $players = registry::getObject("players");
+        print_r($players);
         foreach($players as $player){
             echo $player->getId()." == ".$playerId."\n";
             if($player->getId() == $playerId){
