@@ -47,6 +47,7 @@ class Parser{
     private static function getVarValue($var, script $script){
         if(substr($var,0,1) == "$"){
             $var = substr($var, 1);
+            print_r($script);
             echo "getting var value for $var\n";
             $var = $script->getVarValue($var);
             echo "got $var\n";
