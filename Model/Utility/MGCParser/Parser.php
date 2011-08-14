@@ -31,6 +31,10 @@ class Parser{
     
     private static function handleVariables($line, script $script){
         $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
+        $inspeechmarks=false;
+        $invarname=false;
+        $bits = array();
+        $biton=0;
         preg_match('|\$([a-zA-Z0-9]*)|', $line, $matches);
         $varname = $matches[1];
         //check for protected variable names
@@ -39,9 +43,29 @@ class Parser{
             $value = trim(substr($line, strpos($line, "=")+1));
             //delete ;
             $value = substr($value,0,strlen($value)-1);
-            if(substr($value, 0, 1) == "'"){
-                $value = substr($value, 1, strlen($value)-1);
+            for($i=0;$i<strlen($value);$i++){
+                $char = substr($value, $i, 1);
+                if($char == "'"){
+                    if($inspeechmarks == true){
+                        $inspeechmarks = false;
+                    }
+                    else $inspeechmarks = true;
+                }elseif(!ctype_alnum($char) && ! $inspeechmarks){
+                    if($char == "&"){
+                        $biton++;
+                    }elseif( strlen( trim($char) ) ){ //not a whitespace char
+                        echo "Syntax error in $line in {$script->getFile()}\n";
+                    }
+                }
+                $bits[$biton] .= $char;
             }
+            echo "$line resulted in: \n";
+            print_r($bits);
+            foreach($bits as $bit){
+                $bit = trim($bit);
+                $value .= self::getVarValue($bit, $script);
+            }
+            
             //new value
             $script->setVarValue($varname, $value);
             
