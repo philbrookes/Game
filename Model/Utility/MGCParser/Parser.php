@@ -22,6 +22,7 @@ class Parser{
     private static function handleVariables($line, script $script){
         $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
         preg_match('|\$([a-zA-Z0-9])|', $line, $matches);
+        print_r($matches);
         $varname = $matches[1];
         //check for protected variable names
         if(!in_array($varname, $protectedNames)){
