@@ -22,7 +22,7 @@ class Parser{
     private static function handleVariables($line, $script){
         $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
         preg_match('|\$([a-zA-Z0-9])|', $line, $matches);
-        $varname = $matches[0];
+        $varname = $matches[1];
         //check for protected variable names
         if(!in_array($varname, $protectedNames)){
             //get assignment
@@ -56,8 +56,7 @@ class Parser{
         $operations = explode(",", configuration::getSetting("operations"));
         //get equation from if statement
         preg_match("|\((.*)\)|", $line, $matches);
-        print_r($matches);
-        $equation = $matches[0];
+        $equation = $matches[1];
         //get varnames used
         list($var1, $var2) = explode("|", str_replace($operations, "|", $equation));
         $var1 = self::getVarValue($var1, $script);
@@ -120,7 +119,7 @@ class Parser{
         $wholeclass = $namespace.$classname;
         //get args
         preg_match("|\((.*)\)|", $line, $matches);
-        $args = $matches[0];
+        $args = $matches[1];
         $args = explode(",", $args);
         
         foreach($args as $arg){
