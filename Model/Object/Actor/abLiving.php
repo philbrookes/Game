@@ -12,7 +12,7 @@ abstract class abLiving {
 		    $constitution;
         
         public function __construct(){
-            $this->name = "UNNAMED";
+            $this->name = "Phil";
         }
         
         public function getName() {
