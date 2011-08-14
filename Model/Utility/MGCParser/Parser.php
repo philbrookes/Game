@@ -126,6 +126,7 @@ class Parser{
         $namespace = "\\Controller\\Exposed\\";
         $classname = substr($line, 0, strpos("(", $line));
         $wholeclass = $namespace.$classname;
+        echo $classname." / ".$wholeclass."\n";
         //get args
         preg_match("|\((.*)\)|", $line, $matches);
         $args = $matches[1];
@@ -162,13 +163,13 @@ class Parser{
                 //if statement
                     echo "found an if statement\n$line\n";
                     $lineon = self::handleIfStatement($script, $line, $lineon);
-                }else{
+                }else if(trim($line) !== "endif"){
                     echo "possible function call\n$line\n";
                 //function call
                     //function found
                     $res = self::processFunctionCall($script, $line);
                     if($res !== true){
-                        echo "Badly formatted code on line: $linenum in {$script->getFile()}\n";
+                        echo "Badly formatted code on line: $lineon in {$script->getFile()}\n";
                     }
                 }
                 $lineon++;
