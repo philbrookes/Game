@@ -63,7 +63,7 @@ class receptionist{
 		if(file_exists($file)){
                     $script = new Script($file);
                     echo "created script\n";
-                    Parser::execute($script, $player);
+                    Parser::execute($script, $player, $instruction);
                     echo "executed script\n";
                 }else{
                     $player->sendData("what?");

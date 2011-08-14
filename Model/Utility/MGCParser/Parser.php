@@ -3,6 +3,7 @@ namespace Model\Utility\MGCParser;
 
 use Model\Utility\configuration;
 use \Model\Object\Actor\player;
+use Model\Instruction\instruction;
 
 class Parser{
     
@@ -117,9 +118,10 @@ class Parser{
         }
         return $lineon;
     }
-    private static function populateSpecialVars(script $script, player $player){
+    private static function populateSpecialVars(script $script, player $player, instruction $instruction){
         $script->setVarValue("player_name", $player->getName());
         $script->setVarValue("player_id", $player->getId());
+        $script->setVarValue("argument", implode(" ", $instruction->getArguments()));
     }
     
     private static function processFunctionCall($script, $line){
@@ -150,8 +152,8 @@ class Parser{
         return true;
     }
     
-    public static function execute(Script $script, player $player){
-        self::populateSpecialVars($script, $player);
+    public static function execute(Script $script, player $player, instruction $instruction){
+        self::populateSpecialVars($script, $player, $instruction);
         
         if($script->syntaxOK()){
             $lineon = 0;
