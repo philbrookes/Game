@@ -10,14 +10,11 @@ use Model\Utility\registry;
 
 class tellPlayer {
     public function process($args){
-        $playerId = $arg[0];
-        $msg = $arg[1];
+        $playerId = $args[0];
+        $msg = $args[1];
         $players = registry::getObject("players");
-        print_r($players);
         foreach($players as $player){
-            echo $player->getId()." == ".$playerId."\n";
             if($player->getId() == $playerId){
-                echo "sending $msg to ".$player->getName()."\n";
                 $player->sendData($msg);
                 break;
             }
