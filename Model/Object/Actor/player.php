@@ -14,7 +14,7 @@ class player extends abLiving implements inLiving {
 	private static $staticId;
 	
 	public function __construct(){
-            parent::__construct();
+            $this->setName("UNNAMED");
 	    $this->socket = new socket();
 	}
         
