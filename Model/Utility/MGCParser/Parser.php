@@ -74,7 +74,7 @@ class Parser{
             if(strpos($equation, $operation)){
                 switch($operation){
                     case "==":
-                        echo "got check equals\n";
+                        echo "got check equals for $var1 == $var2\n";
                         if($var1 != $var2){
                             //false jump to endif
                             $lineon = self::findEndIf($script, $lineon);
