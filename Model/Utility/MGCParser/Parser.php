@@ -7,8 +7,11 @@ use \Model\Object\Actor\player;
 class Parser{
     
     private static function findEndIf(script $script, $linenum){
+        echo "looking for endif\n";
         $counter = 0;
-        for($i = $linenum+1; $i<sizeof($script->getLines())-1; $i++){
+        $lines = $script->getLines();
+        for($i = $linenum+1; $i<sizeof($lines)-1; $i++){
+            $line = $lines[$i];
             if(substr($line, 0, 2) == "if") $counter++;
             if(substr($line, 0, 6) == "endif"){
                 $counter--;
@@ -35,8 +38,6 @@ class Parser{
             //new value
             $script->setVarValue($varname, $value);
             
-            echo "set variable $varname = ".$script->getVarValue($varname)."\n";
-            
             if(strpos($value, "$") !== false){
             //evaluation of other variables
                 //@TODO: not yet implemented
@@ -60,12 +61,9 @@ class Parser{
         preg_match("|\((.*)\)|", $line, $matches);
         $equation = $matches[1];
         //get varnames used
-        echo "equation: $equation\n";
         list($var1, $var2) = explode("|", str_replace($operations, "|", $equation));
-        echo "var1: $var1, var2: $var2\n";
         $var1 = self::getVarValue($var1, $script);
         $var2 = self::getVarValue($var2, $script);
-        echo "var1: $var1, var2: $var2\n";
         foreach($operations as $operation){
             if(strpos($equation, $operation)){
                 switch($operation){
