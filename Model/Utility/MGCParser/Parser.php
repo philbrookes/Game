@@ -139,8 +139,7 @@ class Parser{
         }
         
         print_r($args);
-        
-        if(!class_exists($wholeclass)){
+        if(!class_exists($wholeclass, true)){
             return $classname;
         }
         $class = new $wholeclass;
