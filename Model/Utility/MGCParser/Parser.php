@@ -26,7 +26,7 @@ class Parser{
         //check for protected variable names
         if(!in_array($varname, $protectedNames)){
             //get assignment
-            $value = trim(substr($line, strpos($line, "=")));
+            $value = trim(substr($line, strpos($line, "=")+1));
             //delete ;
             $value = substr($value,0,strlen($value)-1);
             if(substr($value, 0, 1) == "'"){
