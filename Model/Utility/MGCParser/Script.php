@@ -44,11 +44,11 @@ class Script {
         //read file into array
         echo "reading script from: ".$this->file."\n";
         $this->lines =  file($this->file);
-        foreach($this->lines as $line){
+        foreach($this->lines as $linenum => $line){
             //remove all comments
             $pos = strpos($line, "//");
             if($pos !== false){
-                $line = substr($line, 0, $pos);
+                $$this->lines[$linenum] = substr($line, 0, $pos);
             }
         }
         $this->contents = str_replace(array("\r\n", "\r", "\n"), "", implode(" ", $this->lines));
