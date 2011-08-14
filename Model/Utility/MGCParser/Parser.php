@@ -52,8 +52,9 @@ class Parser{
     }
     
     private static function getVarValue($var, script $script){
+        $var = trim($var);
         if(substr($var,0,1) == "$"){
-            $var = trim(substr($var, 1));
+            $var = substr($var, 1);
             $var = $script->getVarValue($var);
         }elseif(substr($var, 0, 1) == "'"){
             $var = substr($var, 1, strlen($var)-1);
