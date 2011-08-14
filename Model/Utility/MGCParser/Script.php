@@ -55,7 +55,7 @@ class Script {
         echo "contents: ".$this->contents."\n";
         //concatenate file and split on line-ends: ;
         $this->lines = explode(";", $this->content);
-        
+        print_r($this->lines);
     }
 }
 
