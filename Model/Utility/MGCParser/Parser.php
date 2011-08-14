@@ -47,10 +47,7 @@ class Parser{
     private static function getVarValue($var, script $script){
         if(substr($var,0,1) == "$"){
             $var = trim(substr($var, 1));
-            print_r($script);
-            echo "getting var value for $var\n";
             $var = $script->getVarValue($var);
-            echo "got $var\n";
         }elseif(substr($var, 0, 1) == "'"){
             $var = substr($var, 1, strlen($var)-1);
         }
@@ -149,6 +146,7 @@ class Parser{
             $lineon = 0;
             $lines = $script->getLines();
             while($lineon < sizeof($lines)-1){
+                echo "start loop\n";
                 $line = $lines[$lineon];
                 echo "processing line $lineon of ".(sizeof($lines)-1)."... $line \n";
                 //assigning a variable
