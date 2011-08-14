@@ -1,4 +1,4 @@
-$msg = 'I want 23 icecreams!'; //string
+$msg = 'I want 24 icecreams!'; //string
 
 if($player_name == 'Phil');
     tellPlayer($player_id, $msg);
