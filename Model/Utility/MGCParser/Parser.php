@@ -42,13 +42,15 @@ class Parser{
                 }
                 else $inspeechmarks = true;
             }elseif(!ctype_alnum($char) && ! $inspeechmarks){
-                if($char == "&"){
-                    $biton++;
-                }elseif( strlen( trim($char) ) ){ //not a whitespace char
-                    echo "Syntax error in $equation\n";
+                if( $char != "&" && strlen( trim($char) ) ){ //not a whitespace char
+                    echo "Syntax error in position: $i in $equation\n";
                 }
             }
-            $bits[$biton] .= $char;
+            if($char == "&"){
+                    $biton++;
+            }else{
+                $bits[$biton] .= $char;
+            }
         }
         echo "$equation resulted in: \n";
         print_r($bits);
