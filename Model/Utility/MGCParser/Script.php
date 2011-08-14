@@ -52,10 +52,8 @@ class Script {
             }
         }
         $this->contents = str_replace(array("\r\n", "\r", "\n"), "", implode(" ", $this->lines));
-        echo "contents: ".$this->contents."\n";
         //concatenate file and split on line-ends: ;
-        $this->lines = explode(";", $this->content);
-        print_r($this->lines);
+        $this->lines = explode(";", $this->contents);
     }
 }
 
