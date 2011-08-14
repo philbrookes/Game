@@ -140,8 +140,10 @@ class Parser{
         
         print_r($args);
         if(!class_exists($wholeclass, true)){
+            echo "$wholeclass did not exist...\n";
             return $classname;
         }
+        echo "$wholeclass exists... processing.\n";
         $class = new $wholeclass;
         
         $class->process($args);
