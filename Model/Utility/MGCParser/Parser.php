@@ -46,7 +46,7 @@ class Parser{
                     echo "Syntax error in position: $i in $equation\n";
                 }
             }
-            if($char == "&"){
+            if($char == "&" && ! $inspeechmarks){
                     $biton++;
             }else{
                 $bits[$biton] .= $char;
