@@ -126,7 +126,7 @@ class Parser{
         $line = trim($line);
         $namespace = "\\Controller\\Exposed\\";
         echo $line."\n";
-        $classname = substr($line, 0, strpos("(", $line));
+        $classname = substr($line, 0, strpos($line, "("));
         $wholeclass = $namespace.$classname;
         echo $classname." / ".$wholeclass."\n";
         //get args
