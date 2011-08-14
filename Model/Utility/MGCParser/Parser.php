@@ -19,8 +19,9 @@ class Parser{
             }
             if(substr($line, 0, 6) == "endif"){
                 echo "found endif, counter: $counter\n";
-                $counter--;
-                if($counter == 0){
+                if($counter > 0){
+                    $counter--;
+                }else{
                     return $i;
                 }
             }
