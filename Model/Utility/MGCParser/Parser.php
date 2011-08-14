@@ -57,7 +57,7 @@ class Parser{
             $var = substr($var, 1);
             $var = $script->getVarValue($var);
         }elseif(substr($var, 0, 1) == "'"){
-            $var = substr($var, 1, strlen($var)-1);
+            $var = substr($var, 1, strlen($var)-2);
         }
         return $var;
     }
