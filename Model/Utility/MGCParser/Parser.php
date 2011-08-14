@@ -56,6 +56,7 @@ class Parser{
         $operations = explode(",", configuration::getSetting("operations"));
         //get equation from if statement
         preg_match("|\((.*)\)|", $line, $matches);
+        print_r($matches);
         $equation = $matches[0];
         //get varnames used
         list($var1, $var2) = explode("|", str_replace($operations, "|", $equation));
@@ -66,6 +67,7 @@ class Parser{
             if(strpos($equation, $operation)){
                 switch($operation){
                     case "==":
+                        echo "got check equals\n";
                         if($var1 != $var2){
                             //false jump to endif
                             $lineon = self::findEndIf($script, $lineon);
