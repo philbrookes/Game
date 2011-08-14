@@ -134,8 +134,8 @@ class Parser{
         $args = $matches[1];
         $args = explode(",", $args);
         
-        foreach($args as $arg){
-            $arg = self::getVarValue($arg, $script);
+        foreach($args as $index => $arg){
+            $args[$index] = self::getVarValue($arg, $script);
         }
         
         print_r($args);
