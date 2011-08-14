@@ -42,7 +42,7 @@ class Parser{
                 }
                 else $inspeechmarks = true;
             }elseif(!ctype_alnum($char) && ! $inspeechmarks){
-                if( $char != "&" && strlen( trim($char) ) ){ //not a whitespace char
+                if( $char != "&" && strlen( trim($char) ) ){ //not a whitespace char or &
                     echo "Syntax error in position: $i in $equation\n";
                 }
             }
