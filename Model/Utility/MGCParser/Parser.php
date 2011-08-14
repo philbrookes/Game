@@ -19,9 +19,9 @@ class Parser{
         }
     } 
     
-    private static function handleVariables($line){
+    private static function handleVariables($line, $script){
         $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
-        ereg('|\$([a-zA-Z0-9])|', $line, $matches);
+        preg_match('|\$([a-zA-Z0-9])|', $line, $matches);
         $varname = $matches[0];
         //check for protected variable names
         if(!in_array($varname, $protectedNames)){
@@ -55,7 +55,7 @@ class Parser{
     private static function handleIfStatement(script $script, $line, $lineon){
         $operations = explode(",", configuration::getSetting("operations"));
         //get equation from if statement
-        ereg("|\((.*)\)|", $line, $matches);
+        preg_match("|\((.*)\)|", $line, $matches);
         $equation = $matches[0];
         //get varnames used
         list($var1, $var2) = explode("|", str_replace($operations, "|", $equation));
@@ -117,7 +117,7 @@ class Parser{
         $classname = substr($line, 0, strpos("(", $line));
         $wholeclass = $namespace.$classname;
         //get args
-        ereg("|\((.*)\)|", $line, $matches);
+        preg_match("|\((.*)\)|", $line, $matches);
         $args = $matches[0];
         $args = explode(",", $args);
         
@@ -144,7 +144,7 @@ class Parser{
                 $line = $lines[$lineon];
                 //assigning a variable
                 if(strpos(trim($line), '$') === 0){
-                    self::handleVariables($line);
+                    self::handleVariables($line, $script);
                 }else if(strpos(trim($line), "if")=== 0){
                 //if statement
                     $lineon = self::handleIfStatement($script, $line, $lineon);
