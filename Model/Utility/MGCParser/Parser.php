@@ -61,6 +61,7 @@ class Parser{
         //get varnames used
         echo "equation: $equation\n";
         list($var1, $var2) = explode("|", str_replace($operations, "|", $equation));
+        echo "var1: $var1, var2: $var2\n";
         $var1 = self::getVarValue($var1, $script);
         $var2 = self::getVarValue($var2, $script);
         echo "var1: $var1, var2: $var2\n";
