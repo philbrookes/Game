@@ -11,9 +11,14 @@ class Parser{
         $counter = 0;
         $lines = $script->getLines();
         for($i = $linenum+1; $i<sizeof($lines)-1; $i++){
-            $line = $lines[$i];
-            if(substr($line, 0, 2) == "if") $counter++;
+            $line = trim($lines[$i]);
+            echo "checking for endif in ($i) $line\n";
+            if(substr($line, 0, 2) == "if"){
+                echo "found if, counter: $counter\n";
+                $counter++;
+            }
             if(substr($line, 0, 6) == "endif"){
+                echo "found endif, counter: $counter\n";
                 $counter--;
                 if($counter == 0){
                     return $i;
