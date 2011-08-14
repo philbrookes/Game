@@ -145,11 +145,14 @@ class Parser{
                 $line = $lines[$lineon];
                 //assigning a variable
                 if(strpos(trim($line), '$') === 0){
+                    echo "found a variable\n$line\n";
                     self::handleVariables($line, $script);
                 }else if(strpos(trim($line), "if")=== 0){
                 //if statement
+                    echo "found an if statement\n$line\n";
                     $lineon = self::handleIfStatement($script, $line, $lineon);
                 }else{
+                    echo "possible function call\n$line\n";
                 //function call
                     //function found
                     $res = self::processFunctionCall($script, $line);
