@@ -51,7 +51,7 @@ class Script {
                 $line = substr($line, 0, $pos);
             }
         }
-        $this->contents = implode(" ", $this->lines);
+        $this->contents = str_replace(array("\r\n", "\r", "\n"), "", implode(" ", $this->lines));
         echo "contents: ".$this->contents."\n";
         //concatenate file and split on line-ends: ;
         $this->lines = explode(";", $this->content);
