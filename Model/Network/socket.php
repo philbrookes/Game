@@ -1,4 +1,5 @@
 <?php
+namespace Model\Network;
 /**
 * This class will act as either a listener socket, a client socket or a server socket.
 * EXAMPLE 1: Make a listener:
