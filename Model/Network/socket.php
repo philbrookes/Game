@@ -11,7 +11,7 @@ namespace Model\Network;
 *   $serverSock->Accept($listenSock->getSock());
 * 
 * @author Philip Brookes 
-* email: phil@mywebdesign.ie 
+* email: phil@locals.ie 
 * twitter: @philthi
 * 
 * I love talking to people

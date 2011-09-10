@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author: Phil Brookes
+ * Twitter: @philthi
+ * email: phil@locals.ie
+ */
 include "autoloader.php";
 
 use Model\Utility\configuration;
