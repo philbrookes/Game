@@ -42,7 +42,7 @@ class Parser{
                 }
                 else $inspeechmarks = true;
             }elseif(!ctype_alnum($char) && ! $inspeechmarks){
-                if( $char != "&" && strlen( trim($char) ) ){ //not a whitespace char or &
+                if( $char != "&" && strlen( trim($char) ) && $char != "_" ){ //not a whitespace char or & or _
                     echo "Syntax error in position: $i in $equation\n";
                 }
             }
@@ -52,8 +52,6 @@ class Parser{
                 $bits[$biton] .= $char;
             }
         }
-        echo "$equation resulted in: \n";
-        print_r($bits);
         foreach($bits as $bit){
             $bit = trim($bit);
             $value .= self::getVarValue($bit, $script);
