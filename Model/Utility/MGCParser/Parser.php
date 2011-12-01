@@ -62,10 +62,10 @@ class Parser{
         return $value;
     }
     
-    private static function handleVariables($line, script $script){
+    private static function handleVariables($line, $linenum, script $script){
         $protectedNames = explode(",", configuration::getSetting("protected_varnames"));
 
-        preg_match('|\$([a-zA-Z0-9]*)|', $line, $matches);
+        preg_match('|\$([a-zA-Z][a-zA-Z0-9]+)|', $line, $matches);
         $varname = $matches[1];
         //check for protected variable names
         if(!in_array($varname, $protectedNames)){
@@ -78,11 +78,8 @@ class Parser{
             
             //new value
             $script->setVarValue($varname, $value);
-            
-            if(strpos($value, "$") !== false){
-            //evaluation of other variables
-                //@TODO: not yet implemented
-            }
+        }else{
+            echo "Attempt to overwrite a protected variable in ".$script->getFile()." on line: ".$linenum."\n";
         }
     }
     
@@ -161,10 +158,23 @@ class Parser{
     private static function processFunctionCall($script, $line){
         $line = trim($line);
         $namespace = "\\Controller\\Exposed\\";
-        echo $line."\n";
         $classname = substr($line, 0, strpos($line, "("));
         $wholeclass = $namespace.$classname;
         echo $classname." / ".$wholeclass."\n";
+        
+        if(!class_exists($wholeclass, true)){
+            echo "$wholeclass did not exist...\n";
+            return false;
+        }
+        
+        echo "$wholeclass exists... processing.\n";
+        $class = new $wholeclass;
+        
+        if( ! ($class instanceof \Controller\Exposed\exposedFunction) ){
+            echo "$wholeclass does not implement \\Controller\\Exposed\\exposedFunction\n";
+            return false;
+        }
+        
         //get args
         preg_match("|\((.*)\)|", $line, $matches);
         $args = $matches[1];
@@ -173,14 +183,6 @@ class Parser{
         foreach($args as $index => $arg){
             $args[$index] = self::handleConcatenation($arg, $script);
         }
-        
-        print_r($args);
-        if(!class_exists($wholeclass, true)){
-            echo "$wholeclass did not exist...\n";
-            return $classname;
-        }
-        echo "$wholeclass exists... processing.\n";
-        $class = new $wholeclass;
         
         $class->process($args);
         return true;
@@ -193,20 +195,14 @@ class Parser{
             $lineon = 0;
             $lines = $script->getLines();
             while($lineon < sizeof($lines)-1){
-                echo "start loop\n";
                 $line = $lines[$lineon];
-                echo "processing line $lineon of ".(sizeof($lines)-1)."... $line \n";
                 //assigning a variable
                 if(strpos(trim($line), '$') === 0){
-                    echo "found a variable\n$line\n";
-                    self::handleVariables($line, $script);
+                    self::handleVariables($line, $lineon, $script);
                 }else if(strpos(trim($line), "if")=== 0){
                 //if statement
-                    echo "found an if statement\n$line\n";
                     $lineon = self::handleIfStatement($script, $line, $lineon);
                 }else if(trim($line) !== "endif"){
-                    echo "possible function call\n$line\n";
-                //function call
                     //function found
                     $res = self::processFunctionCall($script, $line);
                     if($res !== true){
