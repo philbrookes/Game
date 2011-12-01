@@ -1,7 +1,6 @@
 <?php
 namespace Controller\Exposed;
 /**
- * Description of abExposed
  *
  * @author peter
  */

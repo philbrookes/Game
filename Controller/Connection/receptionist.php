@@ -59,7 +59,7 @@ class receptionist{
 		$instruction = new instruction($res, $player);
                 echo "received command: ".$instruction->getCommand()."\n";
                 $file = configuration::getSetting("scripts_dir").$instruction->getCommand().".".configuration::getSetting("scripts_ext");
-                echo "file needed to satisfy command: ".$file;
+                echo "file needed to satisfy command: ".$file."\n";
 		if(file_exists($file)){
                     $script = new Script($file);
                     echo "created script\n";
