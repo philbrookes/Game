@@ -8,7 +8,7 @@ namespace Controller\Exposed;
 
 use Model\Utility\registry;
 
-class tellAllOtherPlayers {
+class tellAllOtherPlayers implements exposedFunction{
     public function process($args){
         $playerId = $args[0];
         $msg = $args[1];
