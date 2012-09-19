@@ -31,7 +31,7 @@ class engine {
             if($this->Kate->initListener())
             {
                 $this->setStatus(STATUS_RUNNING);
-                $this->outputToConsole("Socket bound, engine is running!");
+                self::outputToConsole("Socket bound, engine is running!");
             }
         }
 		while($this->status == STATUS_RUNNING){
@@ -40,7 +40,7 @@ class engine {
 		}
 	}
     
-    public function outputToConsole($msg)
+    public static function outputToConsole($msg)
     {
         echo $msg. "\n";
     }

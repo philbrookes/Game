@@ -8,6 +8,7 @@ use Model\Object\Actor\player;
 use Model\Instruction\instruction;
 use Model\Utility\MGCParser\Script;
 use Model\Utility\MGCParser\Parser;
+use Controller\Core\engine;
 
 class receptionist{
     private $listenSocket;
@@ -25,7 +26,7 @@ class receptionist{
         $players = registry::getObject("players");
         foreach($players as $index => $player){
             if(!$player->isConnected()){
-            echo "disconnected player found...\n";
+            engine::outputToConsole("disconnected player found...");
             $player->closeSocket();
             unset($players[$index]);
             }
@@ -41,7 +42,7 @@ class receptionist{
         if($tmp->accept($this->listenSocket->getSock())){
             if(sizeof($players) < configuration::getSetting("max_players")){
                 $tmp->assignId();
-                echo "New Player connected\n";
+                engine::outputToConsole("New Player connected");
                 $players[] = $tmp;
                 registry::updateObject("players", $players);
             }else{
@@ -71,6 +72,7 @@ class receptionist{
                     $script = new Script($file);
                     Parser::execute($script, $player, $instruction);
                 }else{
+                    engine::outputToConsole($file . " does not exist!");
                     $player->sendData("what?");
                 }
             }

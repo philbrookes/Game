@@ -4,6 +4,7 @@ namespace Model\Utility\MGCParser;
 use Model\Utility\configuration;
 use \Model\Object\Actor\player;
 use Model\Instruction\instruction;
+use Controller\Core\engine;
 
 class Parser{
     
@@ -39,7 +40,7 @@ class Parser{
                 else $inspeechmarks = true;
             }elseif(!ctype_alnum($char) && ! $inspeechmarks){
                 if( $char != "&" && strlen( trim($char) ) && $char != "_" && $char != "$"){ //not a whitespace char or & or _
-                    echo "Syntax error in position: $i in $equation\n";
+                    engine::outputToConsole("Syntax error in position: $i in $equation");
                 }
             }
             if($char == "&" && ! $inspeechmarks){
@@ -73,7 +74,7 @@ class Parser{
             //new value
             $script->setVarValue($varname, $value);
         }else{
-            echo "Attempt to overwrite a protected variable in ".$script->getFile()." on line: ".$linenum."\n";
+            engine::outputToConsole("Attempt to overwrite a protected variable in ".$script->getFile()." on line: ".$linenum);
         }
     }
     
@@ -161,7 +162,7 @@ class Parser{
         $class = new $wholeclass;
         
         if( ! ($class instanceof \Controller\Exposed\exposedFunction) ){
-            echo "$wholeclass does not implement \\Controller\\Exposed\\exposedFunction\n";
+            engine::outputToConsole("$wholeclass does not implement \\Controller\\Exposed\\exposedFunction");
             return false;
         }
         
@@ -196,7 +197,7 @@ class Parser{
                     //function found
                     $res = self::processFunctionCall($script, $line);
                     if($res !== true){
-                        echo "Badly formatted code on line: $lineon in {$script->getFile()}\n";
+                        engine::outputToConsole("Badly formatted code on line: $lineon in {$script->getFile()}");
                     }
                 }
                 $lineon++;

@@ -1,6 +1,8 @@
 <?php
 namespace Model\Utility\MGCParser;
 
+use Controller\Core\engine;
+
 class Script {
     private $vars, $lines, $contents;
     private $file;
@@ -42,7 +44,6 @@ class Script {
     
     private function tidy(){
         //read file into array
-        echo "reading script from: ".$this->file."\n";
         $this->lines =  file($this->file);
         foreach($this->lines as $linenum => $line){
             //remove all comments
