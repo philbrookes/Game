@@ -7,7 +7,6 @@ use Model\Instruction\instruction;
 use Controller\Core\engine;
 
 class Parser{
-    
     private static function findEndIf(script $script, $linenum){
         $counter = 0;
         $lines = $script->getLines();
@@ -27,31 +26,36 @@ class Parser{
     } 
     
     private static function handleConcatenation($equation, script $script){
-        $inspeechmarks=false;
-        $bits = array();
-        $biton=0;
+        $inSpeechmarks=false;
+        $chunks = array();
+        $chunk = "";
+        $value = "";
         
         for($i=0;$i<strlen($equation);$i++){
             $char = substr($equation, $i, 1);
             if($char == "'"){
-                if($inspeechmarks == true){
-                    $inspeechmarks = false;
+                if($inSpeechmarks == true){
+                    $inSpeechmarks = false;
                 }
-                else $inspeechmarks = true;
-            }elseif(!ctype_alnum($char) && ! $inspeechmarks){
+                else $inSpeechmarks = true;
+            }elseif(!ctype_alnum($char) && ! $inSpeechmarks){
                 if( $char != "&" && strlen( trim($char) ) && $char != "_" && $char != "$"){ //not a whitespace char or & or _
                     engine::outputToConsole("Syntax error in position: $i in $equation");
                 }
             }
-            if($char == "&" && ! $inspeechmarks){
-                    $biton++;
+            if($char == "&" && ! $inSpeechmarks){
+                $chunks[] = $chunk;
+                $chunk = "";
             }else{
-                $bits[$biton] .= $char;
+                $chunk .= $char;
             }
         }
-        foreach($bits as $bit){
-            $bit = trim($bit);
-            $value .= self::getVarValue($bit, $script);
+        //pick up the last bit
+        $chunks[] = $chunk;
+        
+        foreach($chunks as $chunk){
+            $chunk = trim($chunk);
+            $value .= self::getVarValue($chunk, $script);
         }
     
         return $value;
