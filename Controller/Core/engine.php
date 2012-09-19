@@ -3,11 +3,11 @@ namespace Controller\Core;
 
 use Controller\Connection\receptionist;
 
-define("STATUS_OK", 1);
+define("STATUS_RUNNING", 1);
 define("STATUS_EXIT", 0);
-
+define("STATUS_STARTUP", 2);
 class engine {
-	private $status;
+	private $status = STATUS_STARTUP;
 	/**
 	 *
 	 * @var \receptionist 
@@ -27,9 +27,21 @@ class engine {
 	}
 	
 	public function loop(){
-		while($this->status != STATUS_EXIT){
+        while($this->status == STATUS_STARTUP){
+            if($this->Kate->initListener())
+            {
+                $this->setStatus(STATUS_RUNNING);
+                $this->outputToConsole("Socket bound, engine is running!");
+            }
+        }
+		while($this->status == STATUS_RUNNING){
 		    $this->Kate->checkNewConnections();		
 		    $this->Kate->mapCommands();
 		}
 	}
+    
+    public function outputToConsole($msg)
+    {
+        echo $msg. "\n";
+    }
 }

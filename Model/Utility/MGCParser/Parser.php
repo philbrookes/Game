@@ -8,18 +8,14 @@ use Model\Instruction\instruction;
 class Parser{
     
     private static function findEndIf(script $script, $linenum){
-        echo "looking for endif\n";
         $counter = 0;
         $lines = $script->getLines();
         for($i = $linenum+1; $i<sizeof($lines)-1; $i++){
             $line = trim($lines[$i]);
-            echo "checking for endif in ($i) $line\n";
             if(substr($line, 0, 2) == "if"){
-                echo "found if, counter: $counter\n";
                 $counter++;
             }
             if(substr($line, 0, 6) == "endif"){
-                echo "found endif, counter: $counter\n";
                 if($counter > 0){
                     $counter--;
                 }else{
@@ -105,7 +101,6 @@ class Parser{
             if(strpos($equation, $operation)){
                 switch($operation){
                     case "==":
-                        echo "got check equals for $var1 == $var2\n";
                         if($var1 != $var2){
                             //false jump to endif
                             $lineon = self::findEndIf($script, $lineon);
@@ -158,14 +153,11 @@ class Parser{
         $namespace = "\\Controller\\Exposed\\";
         $classname = substr($line, 0, strpos($line, "("));
         $wholeclass = $namespace.$classname;
-        echo $classname." / ".$wholeclass."\n";
         
         if(!class_exists($wholeclass, true)){
-            echo "$wholeclass did not exist...\n";
             return false;
         }
         
-        echo "$wholeclass exists... processing.\n";
         $class = new $wholeclass;
         
         if( ! ($class instanceof \Controller\Exposed\exposedFunction) ){

@@ -10,65 +10,70 @@ use Model\Utility\MGCParser\Script;
 use Model\Utility\MGCParser\Parser;
 
 class receptionist{
-    
     private $listenSocket;
     
     public function __construct(){
         $this->listenSocket = new socket(configuration::getSetting("host"), configuration::getSetting("port"));
-        $this->listenSocket->open();
     }
     
+    public function initListener(){
+        return $this->listenSocket->open();
+    }
+    
+    
     public function checkDisconnects(){
-	$players = registry::getObject("players");
-	foreach($players as $index => $player){
-	    if(!$player->isConnected()){
-		echo "disconnected player found...\n";
-		$player->closeSocket();
-		unset($players[$index]);
-	    }
-	}
-	rsort($players);
-	registry::updateObject("players", $players);
+        $players = registry::getObject("players");
+        foreach($players as $index => $player){
+            if(!$player->isConnected()){
+            echo "disconnected player found...\n";
+            $player->closeSocket();
+            unset($players[$index]);
+            }
+        }
+        rsort($players);
+        registry::updateObject("players", $players);
     }
     
     public function checkNewConnections(){
-	$this->checkDisconnects();
+        $this->checkDisconnects();
         $players = registry::getObject("players");
-	$tmp = new player();
-	if($tmp->accept($this->listenSocket->getSock())){
-	    if(sizeof($players) < configuration::getSetting("max_players")){
-		$tmp->assignId();
+        $tmp = new player();
+        if($tmp->accept($this->listenSocket->getSock())){
+            if(sizeof($players) < configuration::getSetting("max_players")){
+                $tmp->assignId();
                 echo "New Player connected\n";
-		$players[] = $tmp;
-		registry::updateObject("players", $players);
-	    }else{
-		$this->sendSystemFullMessage($tmp);
-	    }
+                $players[] = $tmp;
+                registry::updateObject("players", $players);
+            }else{
+                $this->sendSystemFullMessage($tmp);
+            }
         }
     }
+
     public function sendSystemFullMessage(player $player){
-	$player->sendData(configuration::getSetting("system_full_message"));
-	$player->closeSocket();
+        $player->sendData(configuration::getSetting("system_full_message"));
+        $player->closeSocket();
     }
     
     public function mapCommands(){
-	$players = registry::getObject("players");
-	foreach($players as $player){
-	    $res = $player->getData();
-	    if($res != ""){
-		$instruction = new instruction($res, $player);
-                echo "received command: ".$instruction->getCommand()."\n";
-                $file = configuration::getSetting("scripts_dir").$instruction->getCommand().".".configuration::getSetting("scripts_ext");
-                echo "file needed to satisfy command: ".$file."\n";
-		if(file_exists($file)){
+        $players = registry::getObject("players");
+        foreach($players as $player){
+            $res = $player->getData();
+            if($res != ""){
+                $instruction = new instruction($res, $player);
+
+                $file = configuration::getSetting("root_dir")
+                    . configuration::getSetting("scripts_dir") 
+                    . $instruction->getCommand()
+                    . "." . configuration::getSetting("scripts_ext");
+
+                if(file_exists($file)){
                     $script = new Script($file);
-                    echo "created script\n";
                     Parser::execute($script, $player, $instruction);
-                    echo "executed script\n";
                 }else{
                     $player->sendData("what?");
                 }
-	    }
-	}
+            }
+        }
     }
 }
