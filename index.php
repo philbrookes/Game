@@ -6,12 +6,14 @@
  */
 include "autoloader.php";
 
-use Model\Utility\configuration;
-use Controller\Core\engine;
-use Model\Utility\registry;
+use Core\Model\Utility\configuration;
+use Core\Controller\Core\engine;
+use Core\Model\Utility\registry;
 
 configuration::addSetting("root_dir", dirname(__FILE__));
-configuration::loadFromIni(configuration::getSetting("root_dir") . DIRECTORY_SEPARATOR . "Config" . DIRECTORY_SEPARATOR . "config.ini");
+configuration::addSetting("config_dir", configuration::getSetting("root_dir") . DIRECTORY_SEPARATOR . "Core" . DIRECTORY_SEPARATOR . "Config");
+configuration::loadFromIni(configuration::getSetting("config_dir") . DIRECTORY_SEPARATOR . "config.ini");
+
 ini_set("default_socket_timeout", configuration::getSetting("socket_timeout"));
 
 $players = array();
